@@ -24,7 +24,9 @@ A document scanning Android app inspired by Microsoft Lens. Capture multiple doc
 
 ## Building
 
-Open the `StitchLens` folder in Android Studio and run on a device/emulator.
+1. Clone the repo
+2. Open the project in Android Studio
+3. Sync Gradle and run on a device or emulator
 
 Requires Android SDK 26+ (Android 8.0).
 
