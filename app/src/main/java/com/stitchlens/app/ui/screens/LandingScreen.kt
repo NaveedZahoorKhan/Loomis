@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.outlined.DocumentScanner
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LandingScreen(onStartScanning: () -> Unit) {
+fun LandingScreen(onStartScanning: () -> Unit, onRecentScans: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -134,6 +135,25 @@ fun LandingScreen(onStartScanning: () -> Unit) {
                 StatItem("HD", "Quality")
                 StatItem("PDF", "Output")
                 StatItem("SEC", "Private")
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Recent Scans button
+            OutlinedButton(
+                onClick = onRecentScans,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Icon(
+                    Icons.Filled.History,
+                    null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Recent Scans", fontWeight = FontWeight.SemiBold)
             }
         }
     }

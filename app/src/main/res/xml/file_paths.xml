@@ -2,4 +2,5 @@
 <paths>
     <cache-path name="shared_pdfs" path="pdfs/" />
     <cache-path name="shared_images" path="images/" />
+    <files-path name="scans" path="scans/" />
 </paths>

@@ -17,6 +17,7 @@ object Routes {
     const val CROP = "crop/{pageIndex}"
     const val PREVIEW = "preview"
     const val SHARE = "share"
+    const val RECENT = "recent"
 
     fun cropRoute(pageIndex: Int) = "crop/$pageIndex"
 }
@@ -29,7 +30,8 @@ fun StitchLensNavGraph(
     NavHost(navController = navController, startDestination = Routes.LANDING) {
         composable(Routes.LANDING) {
             LandingScreen(
-                onStartScanning = { navController.navigate(Routes.CAMERA) }
+                onStartScanning = { navController.navigate(Routes.CAMERA) },
+                onRecentScans = { navController.navigate(Routes.RECENT) }
             )
         }
         composable(Routes.CAMERA) {
@@ -76,6 +78,11 @@ fun StitchLensNavGraph(
                     viewModel.reset()
                     navController.popBackStack(Routes.LANDING, inclusive = false)
                 },
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(Routes.RECENT) {
+            RecentScansScreen(
                 onBack = { navController.popBackStack() }
             )
         }

@@ -16,6 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stitchlens.app.data.ScanHistory
+import com.stitchlens.app.data.ScanRecord
 import com.stitchlens.app.util.DocumentDetector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -133,7 +135,8 @@ class ScanViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val pdfDir = File(context.cacheDir, "pdfs").apply { mkdirs() }
+                    // Save to persistent directory (not cache)
+                    val pdfDir = ScanHistory.getPdfDir(context)
                     val pdfFile = File(pdfDir, pdfFileName)
                     val document = PdfDocument()
 
@@ -152,6 +155,15 @@ class ScanViewModel : ViewModel() {
                         document.writeTo(out)
                     }
                     document.close()
+
+                    // Record in scan history
+                    ScanHistory.addScan(context, ScanRecord(
+                        fileName = pdfFileName,
+                        filePath = pdfFile.absolutePath,
+                        pageCount = pages.size,
+                        timestamp = System.currentTimeMillis(),
+                        fileSizeBytes = pdfFile.length()
+                    ))
 
                     pdfUri = FileProvider.getUriForFile(
                         context,
